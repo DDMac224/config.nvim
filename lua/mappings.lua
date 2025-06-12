@@ -22,3 +22,8 @@ map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>")
 map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>")
 map({ "n", "i", "v" }, "<C-n>", "<cmd>NvimTreeToggle<cr>")
 map("n", "<Esc>", "<cmd>noh<CR>")
+
+map("n", "<leader>//", "gcc")
+map("n", "<leader>/*", "gbc")
+map("v", "<leader>//", "gc")
+map("v", "<leader>/*", "gb")
