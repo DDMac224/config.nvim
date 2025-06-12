@@ -20,9 +20,7 @@ return {
 			cmp_lsp.default_capabilities()
 		)
 
-		require("mason").setup()
-
-		require("mason-lspconfig").setup({
+		require("mason").setup({
 			ensure_installed = {
 				"asmfmt",
 				"asm-lsp",
@@ -30,13 +28,15 @@ return {
 				"clangd",
 				"clang-format",
 				"google-java-format",
-				"lua-language-server",
+				"lua_ls",
 				"mypy",
 				"prettier",
 				"pyright",
-				"rust-analyzer",
+				"rust_analyzer",
 			},
+		})
 
+		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)
 					require("lspconfig")[server_name].setup({
@@ -70,7 +70,6 @@ return {
 						filetypes = { "python" },
 					})
 				end,
-
 				rust_analyzer = function()
 					require("lspconfig").rust_analyzer.setup({
 						capabilities = capabilities,
@@ -85,7 +84,6 @@ return {
 						},
 					})
 				end,
-
 				gopls = function()
 					require("lspconfig").gopls.setup({
 						capabilities = capabilities,
@@ -103,7 +101,6 @@ return {
 						},
 					})
 				end,
-
 				clangd = function()
 					require("lspconfig").clangd.setup({
 						capabilities = capabilities,
@@ -121,7 +118,6 @@ return {
 						single_file_support = true,
 					})
 				end,
-
 				asm_lsp = function()
 					require("lspconfig").asm_lsp.setup({
 						capabilities = capabilities,
