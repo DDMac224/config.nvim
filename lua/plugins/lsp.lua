@@ -63,6 +63,73 @@ return {
 						},
 					})
 				end,
+				pyright = function()
+					require("lspconfig").pyright.setup({
+						capabilities = capabilities,
+						root_dir = require("lspconfig").util.root_pattern(".venv", "venv", ".git"),
+						filetypes = { "python" },
+					})
+				end,
+
+				rust_analyzer = function()
+					require("lspconfig").rust_analyzer.setup({
+						capabilities = capabilities,
+						filetypes = { "rust" },
+						root_dir = require("lspconfig").util.root_pattern("Cargo.toml"),
+						settings = {
+							["rust_analyzer"] = {
+								cargo = {
+									allFeatures = true,
+								},
+							},
+						},
+					})
+				end,
+
+				gopls = function()
+					require("lspconfig").gopls.setup({
+						capabilities = capabilities,
+						cmd = { "gopls" },
+						filetypes = { "go", "gomod", "gowork", "gotmpl" },
+						root_dir = require("lspconfig").util.root_pattern("go.work", "go.mod", ".git"),
+						settings = {
+							gopls = {
+								completeUnimported = true,
+								usePlaceholders = true,
+								analyses = {
+									unusedparams = true,
+								},
+							},
+						},
+					})
+				end,
+
+				clangd = function()
+					require("lspconfig").clangd.setup({
+						capabilities = capabilities,
+						cmd = { "/usr/bin/clangd" },
+						filetypes = { "c", "cpp" },
+						root_dir = require("lspconfig").util.root_pattern(
+							".clangd",
+							".clang-tidy",
+							".clang-format",
+							"compile_commands.json",
+							"compile_flags.txt",
+							"configure.ac",
+							".git"
+						),
+						single_file_support = true,
+					})
+				end,
+
+				asm_lsp = function()
+					require("lspconfig").asm_lsp.setup({
+						capabilities = capabilities,
+						cmd = { "asm-lsp" },
+						filetypes = { "asm", "s", "S" },
+						root_dir = require("lspconfig").util.root_pattern(".asm-lsp.toml", ".git"),
+					})
+				end,
 			},
 		})
 
