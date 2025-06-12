@@ -1,20 +1,29 @@
 local map = vim.keymap.set
+local which_key = require("which-key")
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
 	callback = function(event)
 		local opts = { buffer = event.buf }
+		local mappings = {
+			{ "<leader>l", group = "LSP" },
+			{ "<leader>ld", vim.diagnostic.open_float, desc = "Open diagnostic float" },
+			{ "<leader>lh", vim.lsp.buf.code_action, desc = "Code action" },
+			{ "<leader>lr", vim.lsp.buf.rename, desc = "Rename" },
+			{ "<leader>ls", vim.lsp.buf.signature_help, desc = "Signature help" },
+			{ "<leader>lf", vim.lsp.buf.format({ async = true }), desc = "Format buffer" },
+			{ "K", vim.lsp.buf.hover, desc = "Show hover information" },
+			{ "[d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
+			{ "]d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
+			{ "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+			{ "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+			{ "gi", vim.lsp.buf.implementation, desc = "Go to implementation" },
+			{ "gl", vim.diagnostic.open_float, desc = "Open diagnostic float" },
+			{ "go", vim.lsp.buf.type_definition, desc = "Go to type definition" },
+			{ "gr", vim.lsp.buf.references, desc = "References" },
+		}
 
-		map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
-		map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-		map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-		map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
-		map("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
-		map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
-		map("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
-		map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-		map({ "n", "x" }, "<leader>lm", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-		map("n", "<leader>lh", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+		which_key.add(mappings, opts)
 	end,
 })
 
